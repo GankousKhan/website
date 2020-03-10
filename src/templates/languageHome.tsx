@@ -4,6 +4,8 @@ import { Header } from "../components/Header"
 import { Markdown } from "../components/Markdown"
 import { ResourcesList } from "../components/ResourcesList"
 import { SEO } from "../components/SEO"
+import { Container } from "../components/Container"
+import { Footer } from "../components/Footer"
 
 // @todo maybe find alternative type for data
 const LanguageHome: FC<any> = ({ data, pageContext }) => {
@@ -20,11 +22,12 @@ const LanguageHome: FC<any> = ({ data, pageContext }) => {
         authors={fields.authors}
         createdAt={frontmatter.created_at}
         timeToRead={timeToRead}
-        recommendedReading={frontmatter.recommended_reading}
-        externalResources={frontmatter.external_resources}
       />
-      <Markdown content={html} />
-      <ResourcesList relativeDirectory={pageContext.language} />
+      <Container>
+        <Markdown content={html} />
+        <ResourcesList relativeDirectory={pageContext.language} />
+        <Footer />
+      </Container>
     </Fragment>
   )
 }

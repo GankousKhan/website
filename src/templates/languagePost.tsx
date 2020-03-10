@@ -5,6 +5,8 @@ import { Markdown } from "../components/Markdown"
 import { SEO } from "../components/SEO"
 
 import "katex/dist/katex.min.css"
+import { PageContent } from "../components/PageContent"
+import { Footer } from "../components/Footer"
 
 // @todo maybe find alternative type for data
 const LanguagePost: FC<any> = ({ data }) => {
@@ -21,10 +23,17 @@ const LanguagePost: FC<any> = ({ data }) => {
         authors={fields.authors}
         createdAt={frontmatter.created_at}
         timeToRead={timeToRead}
+      />
+      <PageContent
+        content={
+          <>
+            <Markdown content={html} />
+            <Footer />
+          </>
+        }
         recommendedReading={frontmatter.recommended_reading}
         externalResources={frontmatter.external_resources}
       />
-      <Markdown content={html} />
     </Fragment>
   )
 }

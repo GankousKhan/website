@@ -1,12 +1,59 @@
-import { Link } from "gatsby"
-import { darken, lighten } from "polished"
-import styled, { css } from "styled-components"
+import { darken, lighten, transparentize } from "polished"
+import styled from "styled-components"
 import { fontFamily, modularScale } from "../../design/typography"
+import { WavesTop, WavesBottom } from "../Waves"
+import Circles from "../../images/circles.svg"
 
 export const HeaderWrapper = styled.div`
-  border-bottom: 1px solid #dbdbdb;
-  padding-bottom: 32px;
-  margin-bottom: 32px;
+  width: calc(100% - 305px);
+  padding-right: 305px;
+  height: 391px;
+  padding-top: 67px;
+  position: relative;
+`
+
+export const BackgroundWrapper = styled.div`
+  height: 391px;
+  padding-top: 67px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`
+
+export const StyledCircles = styled(Circles)`
+  position: absolute;
+  top: 50%;
+  margin-top: -200px;
+`
+
+export const StyledWavesTop = styled(WavesTop)`
+  opacity: ${props => (props.theme.name === "dark" ? 0.8 : 0.2)};
+  top: -10%;
+  transform: scaleX(-1);
+`
+
+export const StyledWavesBottom = styled(WavesBottom)`
+  opacity: ${props => (props.theme.name === "dark" ? 0.8 : 0.2)};
+  bottom: -30%;
+  transform: scaleX(-1);
+`
+
+export const Box = styled.div`
+  display: inline-flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 40px;
+  margin-left: -16px;
+  background: ${props => transparentize(0.3, props.theme.main.background)};
+  padding: 16px;
+  backdrop-filter: blur(14px);
+
+  @media screen and (max-width: 767px) {
+    right: 40px;
+  }
 `
 
 export const Top = styled.div`
@@ -25,11 +72,16 @@ export const Title = styled.h1`
   line-height: ${modularScale(6).lineHeight}px;
   letter-spacing: -1.75px;
   margin-top: 0;
+  margin-bottom: 16px;
 `
 
 export const Meta = styled.div`
   display: flex;
   align-items: center;
+  color: ${props =>
+    props.theme.name === "dark"
+      ? transparentize(0.1, props.theme.main.foreground)
+      : transparentize(0.1, props.theme.main.foreground)};
 
   & + &::before {
     content: "•";
@@ -47,53 +99,6 @@ export const Meta = styled.div`
   }
 `
 
-const ExtraLinks = styled.div`
-  margin-top: 16px;
-`
-
-export const RecommendedReading = styled(ExtraLinks)``
-
-export const ExternalResources = styled(ExtraLinks)``
-
-const extraLink = css`
-  display: flex;
-  align-items: center;
-  color: ${props => props.theme.main.link};
-  margin-top: 4px;
-  margin-left: 20px;
-  cursor: pointer;
-
-  &:hover {
-    color: ${props =>
-      props.theme.name === "dark"
-        ? lighten(0.15, props.theme.main.link)
-        : darken(0.15, props.theme.main.link)};
-  }
-
-  svg {
-    width: 14px;
-    flex: 0 0 14px;
-    transform: rotate(90deg);
-    margin-right: 6px;
-  }
-
-  svg path {
-    fill: ${props => props.theme.main.link};
-  }
-`
-
-export const ExtraLinkInternal = styled(Link)`
-  ${extraLink};
-`
-
-export const ExtraLinkExternal = styled.a`
-  ${extraLink};
-`
-
-export const ExtraLinkText = styled.div`
-  text-decoration: underline;
-`
-
 export const Popover = styled.div`
   display: none;
   position: absolute;
@@ -101,10 +106,11 @@ export const Popover = styled.div`
   margin-top: 8px;
   padding: 8px;
   border-radius: 4px;
+  backdrop-filter: blur(14px);
   background: ${props =>
     props.theme.name === "dark"
-      ? lighten(0.1, props.theme.main.background)
-      : darken(0.1, props.theme.main.background)};
+      ? transparentize(0.3, props.theme.main.background)
+      : transparentize(0.3, props.theme.main.background)};
 
   &::before {
     position: absolute;
@@ -113,13 +119,14 @@ export const Popover = styled.div`
     content: "";
     width: 0;
     height: 0;
+    backdrop-filter: blur(14px);
     border-style: solid;
     border-width: 0 3.5px 4px 3.5px;
     border-color: transparent transparent
       ${props =>
         props.theme.name === "dark"
-          ? lighten(0.1, props.theme.main.background)
-          : darken(0.1, props.theme.main.background)}
+          ? transparentize(0.3, props.theme.main.background)
+          : transparentize(0.3, props.theme.main.background)}
       transparent;
   }
 `
@@ -128,6 +135,11 @@ export const PopoverToggler = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  border-bottom: 1px dashed
+    ${props =>
+      props.theme.name === "dark"
+        ? transparentize(0.1, props.theme.main.foreground)
+        : transparentize(0.1, props.theme.main.foreground)};
 
   &:hover ${Popover} {
     display: block;
